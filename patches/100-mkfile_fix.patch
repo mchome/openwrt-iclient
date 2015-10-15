@@ -1,0 +1,21 @@
+--- a/iclient-linux/Makefile
++++ b/iclient-linux/Makefile
+@@ -1,7 +1,7 @@
+ TARGET = iclient
+ BIN_DIR = /usr/bin/
+-INCLUDES = 
+-LIBS = -lpcap
++INCLUDES = -I$(STAGING_DIR)/usr/lib/libiconv-stub/include/
++LIBS = -lpcap -L$(STAGING_DIR)/usr/lib/libiconv-stub/lib/ -liconv
+ 
+ C_SOURCES       = $(wildcard *.c)
+ C_OBJS = $(patsubst %.c, %.o, $(C_SOURCES))
+@@ -14,7 +14,7 @@ PREREQUISITES   = $(addprefix .,$(addsuf
+ 
+ # ------------  make the executable (the default goal)  ------------------------
+ %.o:%.c
+-	$(CC) -c $<$ $(CCFLAGS)
++	$(CC) -c $<$ $(CCFLAGS) $(INCLUDES)
+ 
+ $(TARGET): $(CPP_OBJS) $(C_OBJS)
+ 	$(CXX)$(LINKFLAGS) -o $(TARGET) $^ $(LIBS)
